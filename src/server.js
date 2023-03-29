@@ -2,6 +2,7 @@ import Express from "express"
 import cors from "cors"
 import listEndpoints from "express-list-endpoints"
 import { pgConnect } from "./db.js"
+import usersRouter from "./users/index.js"
 
 const server = Express()
 const port = process.env.PORT || 3001
@@ -11,6 +12,7 @@ server.use(cors())
 server.use(Express.json())
 
 // ****************************** ENDPOINTS *******************************
+server.use("/users", usersRouter)
 
 // *************************** ERROR HANDLERS *****************************
 
