@@ -52,6 +52,12 @@ usersRouter.put("/:userId", async (req, res, next) => {
 
 usersRouter.delete("/:userId", async (req, res, next) => {
   try {
+    const numberOfDeletedRows = await UsersModel.destroy({ where: { userId: req.params.userId } })
+    if (numberOfDeletedRows === 1) {
+      res.status(204).send()
+    } else {
+      next(createHttpError(404, `User with id ${req.params.userId} not found!`))
+    }
   } catch (error) {
     next(error)
   }
