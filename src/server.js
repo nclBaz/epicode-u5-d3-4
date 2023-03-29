@@ -3,6 +3,7 @@ import cors from "cors"
 import listEndpoints from "express-list-endpoints"
 import { pgConnect } from "./db.js"
 import usersRouter from "./users/index.js"
+import { badRequestErrorHandler, genericErrorHandler, notFoundErrorHandler } from "./errorHandlers.js"
 
 const server = Express()
 const port = process.env.PORT || 3001
@@ -15,6 +16,9 @@ server.use(Express.json())
 server.use("/users", usersRouter)
 
 // *************************** ERROR HANDLERS *****************************
+server.use(badRequestErrorHandler)
+server.use(notFoundErrorHandler)
+server.use(genericErrorHandler)
 
 await pgConnect()
 
